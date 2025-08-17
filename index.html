@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Florescer - Blog Feminino</title>
+    <style>
+        :root {
+            --rosa-claro: #ffebee;
+            --rosa-medio: #f8bbd0;
+            --rosa-escuro: #f48fb1;
+            --roxo: #ce93d8;
+            --texto: #5d4037;
+            --destaque: #e91e63;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: var(--rosa-claro);
+            color: var(--texto);
+            line-height: 1.6;
+        }
+        
+        header {
+            background: linear-gradient(135deg, var(--rosa-escuro), var(--roxo));
+            color: white;
+            padding: 2rem 0;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.1)" d="M30,30 Q50,10 70,30 T90,50 Q70,70 50,90 T10,50 Q30,30 50,10 T90,30 Q70,50 90,70 T50,90 Q30,70 10,50 T30,30Z"/></svg>');
+            opacity: 0.3;
+        }
+        
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+            position: relative;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        
+        .logo span {
+            font-weight: 700;
+            color: white;
+        }
+        
+        .slogan {
+            font-style: italic;
+            opacity: 0.9;
+            position: relative;
+        }
+        
+        nav {
+            background-color: white;
+            padding: 1rem;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            list-style: none;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            text-decoration: none;
+            color: var(--texto);
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            background-color: var(--rosa-medio);
+            color: white;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+        }
+        
+        .posts {
+            display: grid;
+            gap: 2rem;
+        }
+        
+        .post {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .post:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+        
+        .post-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .post-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .post:hover .post-image img {
+            transform: scale(1.05);
+        }
+        
+        .post-content {
+            padding: 1.5rem;
+        }
+        
+        .post-date {
+            color: var(--rosa-escuro);
+            font-size: 0.9rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+        }
+        
+        .post-date::before {
+            content: "🌸";
+            margin-right: 0.5rem;
+        }
+        
+        .post-title {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--destaque);
+        }
+        
+        .post-excerpt {
+            margin-bottom: 1.5rem;
+            color: var(--texto);
+        }
+        
+        .read-more {
+            display: inline-block;
+            background: linear-gradient(to right, var(--rosa-escuro), var(--roxo));
+            color: white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .read-more:hover {
+            transform: translateX(5px);
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+        }
+        
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 2rem;
+        }
+        
+        .widget {
+            background-color: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .widget-title {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--rosa-medio);
+            color: var(--destaque);
+            display: flex;
+            align-items: center;
+        }
+        
+        .widget-title::before {
+            content: "✨";
+            margin-right: 0.5rem;
+        }
+        
+        .about-widget img {
+            width: 100%;
+            border-radius: 10px;
+            margin-bottom: 1rem;
+        }
+        
+        .categories-list, .popular-posts {
+            list-style: none;
+        }
+        
+        .categories-list li, .popular-posts li {
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px dashed var(--rosa-medio);
+        }
+        
+        .categories-list a, .popular-posts a {
+            text-decoration: none;
+            color: var(--texto);
+            transition: color 0.3s ease;
+            display: flex;
+            align-items: center;
+        }
+        
+        .categories-list a::before {
+            content: "🌷";
+            margin-right: 0.5rem;
+        }
+        
+        .popular-posts a::before {
+            content: "💐";
+            margin-right: 0.5rem;
+        }
+        
+        .categories-list a:hover, .popular-posts a:hover {
+            color: var(--destaque);
+        }
+        
+        .newsletter-form input {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1rem;
+            border: 1px solid var(--rosa-medio);
+            border-radius: 20px;
+            outline: none;
+        }
+        
+        .newsletter-form button {
+            width: 100%;
+            padding: 0.75rem;
+            background: linear-gradient(to right, var(--rosa-escuro), var(--roxo));
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .newsletter-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+        }
+        
+        footer {
+            background: linear-gradient(135deg, var(--roxo), var(--rosa-escuro));
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+        
+        .social-icons {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .social-icons a {
+            color: white;
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+        
+        .social-icons a:hover {
+            transform: translateY(-3px);
+        }
+        
+        .copyright {
+            opacity: 0.8;
+            font-size: 0.9rem;
+        }
+        
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+                gap: 0.5rem;
+            }
+        }
+        
+        /* Animação de flutuação para o logo */
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+        
+        .logo {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1 class="logo">Florescer <span>Blog</span></h1>
+        <p class="slogan">Desabroche sua melhor versão</p>
+    </header>
+    
+    <nav>
+        <ul class="nav-links">
+            <li><a href="#">Início</a></li>
+            <li><a href="#">Beleza</a></li>
+            <li><a href="#">Bem-estar</a></li>
+            <li><a href="#">Relacionamentos</a></li>
+            <li><a href="#">Carreira</a></li>
+            <li><a href="#">Sobre</a></li>
+        </ul>
+    </nav>
+    
+    <div class="container">
+        <main class="posts">
+            <article class="post">
+                <div class="post-image">
+                    <img src="https://source.unsplash.com/random/600x400/?woman,selfcare" alt="Mulher cuidando de si mesma">
+                </div>
+                <div class="post-content">
+                    <p class="post-date">15 de Maio, 2023</p>
+                    <h2 class="post-title">O Poder do Autocuidado Diário</h2>
+                    <p class="post-excerpt">Descubra como pequenos rituais de autocuidado podem transformar sua rotina e aumentar sua autoestima. Neste post, compartilho minha jornada e dicas práticas para incorporar o autocuidado no seu dia a dia, mesmo com uma agenda cheia.</p>
+                    <a href="#" class="read-more">Continuar Lendo</a>
+                </div>
+            </article>
+            
+            <article class="post">
+                <div class="post-image">
+                    <img src="https://source.unsplash.com/random/600x400/?fashion,style" alt="Estilo pessoal feminino">
+                </div>
+                <div class="post-content">
+                    <p class="post-date">8 de Maio, 2023</p>
+                    <h2 class="post-title">Encontrando Seu Estilo Pessoal</h2>
+                    <p class="post-excerpt">Como desenvolver um guarda-roupa que realmente te representa? Neste guia completo, exploramos como identificar suas preferências, criar combinações versáteis e construir um estilo único que reflete sua personalidade.</p>
+                    <a href="#" class="read-more">Continuar Lendo</a>
+                </div>
+            </article>
+            
+            <article class="post">
+                <div class="post-image">
+                    <img src="https://source.unsplash.com/random/600x400/?balance,work" alt="Equilíbrio vida-trabalho">
+                </div>
+                <div class="post-content">
+                    <p class="post-date">1 de Maio, 2023</p>
+                    <h2 class="post-title">Equilíbrio Entre Vida Pessoal e Profissional</h2>
+                    <p class="post-excerpt">Neste post, compartilho estratégias testadas e aprovadas para encontrar harmonia entre suas demandas profissionais e pessoais. Aprenda a estabelecer limites saudáveis e priorizar o que realmente importa.</p>
+                    <a href="#" class="read-more">Continuar Lendo</a>
+                </div>
+            </article>
+        </main>
+        
+        <aside class="sidebar">
+            <div class="widget about-widget">
+                <h3 class="widget-title">Sobre Mim</h3>
+                <img src="https://source.unsplash.com/random/300x300/?woman,portrait" alt="Foto da autora">
+                <p>Olá! Sou Camila, criadora do Florescer Blog. Apaixonada por compartilhar dicas de bem-estar, beleza e crescimento pessoal para mulheres incríveis como você!</p>
+            </div>
+            
+            <div class="widget categories-widget">
+                <h3 class="widget-title">Categorias</h3>
+                <ul class="categories-list">
+                    <li><a href="#">Autoconhecimento</a></li>
+                    <li><a href="#">Beleza Natural</a></li>
+                    <li><a href="#">Crescimento Pessoal</a></li>
+                    <li><a href="#">Feminismo</a></li>
+                    <li><a href="#">Produtividade</a></li>
+                    <li><a href="#">Saúde Mental</a></li>
+                </ul>
+            </div>
+            
+            <div class="widget popular-widget">
+                <h3 class="widget-title">Posts Populares</h3>
+                <ul class="popular-posts">
+                    <li><a href="#">Como Dizer Não Sem Culpa</a></li>
+                    <li><a href="#">Rotina de Skincare para Iniciantes</a></li>
+                    <li><a href="#">Desenvolvendo Confiança em Si Mesma</a></li>
+                    <li><a href="#">Meditação para Ansiosas</a></li>
+                </ul>
+            </div>
+            
+            <div class="widget newsletter-widget">
+                <h3 class="widget-title">Newsletter</h3>
+                <p>Receba conteúdos exclusivos diretamente no seu e-mail!</p>
+                <form class="newsletter-form">
+                    <input type="text" placeholder="Seu nome">
+                    <input type="email" placeholder="Seu melhor e-mail">
+                    <button type="submit">Assinar</button>
+                </form>
+            </div>
+        </aside>
+    </div>
+    
+    <footer>
+        <div class="footer-links">
+            <a href="#">Sobre</a>
+            <a href="#">Contato</a>
+            <a href="#">Política de Privacidade</a>
+            <a href="#">Termos de Uso</a>
+        </div>
+        
+        <div class="social-icons">
+            <a href="#">📱</a>
+            <a href="#">📘</a>
+            <a href="#">📸</a>
+            <a href="#">🐦</a>
+            <a href="#">🎬</a>
+        </div>
+        
+        <p class="copyright">© 2023 Florescer Blog. Todos os direitos reservados.</p>
+    </footer>
+    
+    <script>
+        // Sistema simples de posts - pode ser expandido conforme necessidade
+        document.addEventListener('DOMContentLoaded', function() {
+            // Simulando dados de posts (em um sistema real, viriam de um backend)
+            const postsData = [
+                {
+                    id: 1,
+                    date: '22 de Maio, 2023',
+                    title: 'Mindfulness para Iniciantes',
+                    excerpt: 'Aprenda técnicas simples de mindfulness para reduzir o estresse e aumentar o foco no seu dia a dia.',
+                    image: 'https://source.unsplash.com/random/600x400/?meditation'
+                },
+                {
+                    id: 2,
+                    date: '29 de Maio, 2023',
+                    title: 'Alimentação Consciente',
+                    excerpt: 'Como desenvolver uma relação saudável com a comida e ouvir os sinais do seu corpo.',
+                    image: 'https://source.unsplash.com/random/600x400/?healthy,food'
+                }
+            ];
+            
+            // Elemento onde os posts serão inseridos
+            const postsContainer = document.querySelector('.posts');
+            
+            // Função para adicionar posts dinamicamente
+            function addPosts() {
+                postsData.forEach(post => {
+                    const postElement = document.createElement('article');
+                    postElement.className = 'post';
+                    postElement.innerHTML = `
+                        <div class="post-image">
+                            <img src="${post.image}" alt="${post.title}">
+                        </div>
+                        <div class="post-content">
+                            <p class="post-date">${post.date}</p>
+                            <h2 class="post-title">${post.title}</h2>
+                            <p class="post-excerpt">${post.excerpt}</p>
+                            <a href="#" class="read-more" data-id="${post.id}">Continuar Lendo</a>
+                        </div>
+                    `;
+                    postsContainer.appendChild(postElement);
+                });
+            }
+            
+            // Chamada inicial para carregar posts
+            addPosts();
+            
+            // Simulação de interação com o formulário de newsletter
+            const newsletterForm = document.querySelector('.newsletter-form');
+            if (newsletterForm) {
+                newsletterForm.addEventListener('submit', function(e) {
+                    e.preventDefault();
+                    alert('Obrigada por assinar nossa newsletter! Em breve você receberá nossas novidades.');
+                    newsletterForm.reset();
+                });
+            }
+        });
+    </script>
+</body>
+</html>
